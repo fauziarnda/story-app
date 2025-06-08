@@ -58,7 +58,11 @@ export default class App {
     }
 
     const route = routes[routeName];
+    if (this._currentPage?.destroy) {
+      this._currentPage.destroy();
+    }
     const page = route();
+    this._currentPage = page;
 
     if (document.startViewTransition) {
       await document.startViewTransition(async () => {

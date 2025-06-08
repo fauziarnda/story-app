@@ -91,7 +91,7 @@ export default class AddStoryPage {
       canvas.toBlob((blob) => {
         console.log('📸 toBlob callback terpicu', blob);
         if (blob) {
-          this.capturedBlob = blob; // ← INI SEKARANG BEKERJA
+          this.capturedBlob = blob;
           console.log('📸 Gambar dari kamera di-set:', blob);
 
           previewImage.src = URL.createObjectURL(blob);
@@ -171,6 +171,25 @@ export default class AddStoryPage {
 
       this.stream?.getTracks()?.forEach((track) => track.stop());
     });
+
+    this._onHashChange = () => {
+      console.log('🔄 Hash berubah, kamera akan dimatikan...');
+      this.stopCamera();
+    };
+    window.addEventListener('hashchange', this._onHashChange);
+  }
+
+  stopCamera() {
+    if (this.stream) {
+      this.stream.getTracks().forEach((track) => track.stop());
+      console.log('📷 Kamera dimatikan.');
+      this.stream = null;
+    }
+  }
+
+  destroy() {
+    this.stopCamera();
+    window.removeEventListener('hashchange', this._onHashChange);
   }
 
   showLoading(isLoading) {

@@ -31,26 +31,47 @@ export default class BookmarkPage {
     this.feedContainer.innerHTML = '';
     stories.forEach((story) => {
       const storyHTML = `
-        <article class="feed-card">
-          <div class="feed-header">
-            <img src="https://i.pravatar.cc/40?u=${
-              story.name
-            }" class="profile-pic" />
-            <div>
-              <strong>@${story.name}</strong>
-              <p class="feed-date">${new Date(
-                story.createdAt
-              ).toLocaleDateString('id-ID')}</p>
-              <p class="feed-id">ID Cerita: ${story.id}</p>
-            </div>
+      <article class="feed-card" data-id="${story.id}">
+        <div class="feed-header">
+          <img src="https://i.pravatar.cc/40?u=${
+            story.name
+          }" class="profile-pic" />
+          <div>
+            <strong>@${story.name}</strong>
+            <p class="feed-date">${new Date(story.createdAt).toLocaleDateString(
+              'id-ID'
+            )}</p>
+            <p class="feed-id">ID Cerita: ${story.id}</p>
+          </div>
           </div>
           <p class="feed-text">${story.description}</p>
           <img src="${story.photoUrl}" alt="Post dari ${
         story.name
       }" class="feed-image" />
-        </article>
-      `;
+        <button class="delete-btn" aria-label="Hapus cerita">hapus 🗑️</button>
+      </article>
+    `;
       this.feedContainer.insertAdjacentHTML('beforeend', storyHTML);
+    });
+
+    // Pasang event listener untuk tombol hapus
+    this.feedContainer.querySelectorAll('.delete-btn').forEach((btn) => {
+      btn.addEventListener('click', async (event) => {
+        const card = event.target.closest('.feed-card');
+        const id = card.dataset.id;
+
+        if (confirm('Yakin ingin menghapus cerita ini?')) {
+          await StoryDB.delete(id);
+          // Hapus elemen dari DOM
+          card.remove();
+
+          // Jika tidak ada cerita tersisa, tampilkan pesan
+          if (this.feedContainer.children.length === 0) {
+            this.feedContainer.innerHTML =
+              '<p>Tidak ada cerita yang disimpan.</p>';
+          }
+        }
+      });
     });
   }
 }
