@@ -65,6 +65,9 @@ export default class AddStoryPage {
       });
     } catch (err) {
       this.showError('Tidak bisa mengakses kamera: ' + err.message);
+      console.error('❌ Kamera error:', err);
+      video.style.display = 'none';
+      captureBtn.disabled = true;
     }
 
     captureBtn.addEventListener('click', () => {
@@ -77,7 +80,7 @@ export default class AddStoryPage {
       const width = video.videoWidth;
       const height = video.videoHeight;
 
-      if (width === 0 || height === 0) {
+      if (width === 0 || height === 0 || video.readyState < 2) {
         this.showError(
           'Kamera belum siap. Coba tunggu sebentar lalu tekan lagi.'
         );
@@ -93,11 +96,9 @@ export default class AddStoryPage {
         if (blob) {
           this.capturedBlob = blob;
           console.log('📸 Gambar dari kamera di-set:', blob);
-
           previewImage.src = URL.createObjectURL(blob);
           previewImage.hidden = false;
           previewFile.hidden = true;
-
           submitBtn.disabled = false;
         } else {
           this.showError('Gagal mengambil gambar dari kamera.');
@@ -125,6 +126,11 @@ export default class AddStoryPage {
         console.warn('⚠️ Tidak ada file dipilih');
       }
     });
+
+    if (document.getElementById('map')._leaflet_id) {
+      console.warn('🗺️ Map sudah terinisialisasi, akan di-reset.');
+      document.getElementById('map')._leaflet_id = null;
+    }
 
     const map = L.map('map').setView([-7.9797, 112.6304], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -155,7 +161,12 @@ export default class AddStoryPage {
       console.log('Size:', photo?.size);
       console.log('Instance of Blob:', photo instanceof Blob);
 
-      if (!photo || photo.size === 0 || !photo.type?.startsWith('image/')) {
+      if (
+        !photo ||
+        !(photo instanceof Blob) ||
+        photo.size === 0 ||
+        !photo.type?.startsWith('image/')
+      ) {
         this.showError(
           'Silakan ambil gambar yang valid dari kamera atau galeri.'
         );
