@@ -18,16 +18,14 @@ function updateNavbarVisibility() {
 
 document.addEventListener('DOMContentLoaded', async () => {
   updateNavbarVisibility();
-
   const content = document.querySelector('#content');
   const app = new App({ content });
-  await app.renderPage();
-
-  await registerServiceWorker();
 
   window.addEventListener('hashchange', async () => {
     console.log('Hash changed to:', location.hash);
     await app.renderPage();
     updateNavbarVisibility();
   });
+  await app.renderPage();
+  await registerServiceWorker();
 });

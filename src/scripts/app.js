@@ -14,6 +14,11 @@ export default class App {
   }
 
   async #setupPushNotification() {
+    if (!('serviceWorker' in navigator)) {
+      console.warn('Service Worker tidak didukung di browser ini.');
+      return;
+    }
+
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.getSubscription();
     const isSubscribed = Boolean(subscription);
