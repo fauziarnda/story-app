@@ -1,0 +1,11 @@
+# Agar service worker tidak ter-redirect ke index.html
+[[redirects]]
+  from = "/sw.bundle.js"
+  to = "/sw.bundle.js"
+  status = 200
+
+# Agar routing SPA tidak error saat reload halaman selain /
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

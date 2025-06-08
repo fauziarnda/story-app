@@ -74,6 +74,7 @@ export default class App {
       '[App] Memanggil setupPushNotification dan registerServiceWorker'
     );
     await this.#setupPushNotification();
+    // await this.registerServiceWorker();
 
     if (typeof this.#onAuthChange === 'function') {
       this.#onAuthChange();

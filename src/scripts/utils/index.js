@@ -1,10 +1,10 @@
-export function isServiceWorkerAvailable() {
-  return 'serviceWorker' in navigator;
-}
+// export function isServiceWorkerAvailable() {
+//   return 'serviceWorker' in navigator;
+// }
 
 export async function registerServiceWorker() {
-  if (!isServiceWorkerAvailable()) {
-    console.log('Service Worker API unsupported');
+  if (!('serviceWorker' in navigator)) {
+    console.error('Service Worker API not supported.');
     return;
   }
 

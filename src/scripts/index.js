@@ -26,6 +26,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     await app.renderPage();
     updateNavbarVisibility();
   });
-  await app.renderPage();
   await registerServiceWorker();
+  await app.renderPage();
 });
