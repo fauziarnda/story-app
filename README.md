@@ -1,8 +1,8 @@
-# 📖 Story App (Storiez)
+# 📖 Story App
 
-**Storiez** adalah aplikasi web interaktif berbasis Progressive Web App (PWA) yang memungkinkan pengguna untuk berbagi cerita dalam bentuk teks dan gambar, lengkap dengan fitur lokasi dan notifikasi. Dibangun menggunakan arsitektur **Model-View-Presenter (MVP)**, aplikasi ini mengadopsi pendekatan **Single Page Application (SPA)** dengan dukungan **offline mode** melalui IndexedDB.
+**Story App** adalah aplikasi web interaktif berbasis Progressive Web App (PWA) yang memungkinkan pengguna untuk berbagi cerita dalam bentuk teks dan gambar, lengkap dengan fitur lokasi dan notifikasi. Dibangun menggunakan arsitektur **Model-View-Presenter (MVP)**, aplikasi ini mengadopsi pendekatan **Single Page Application (SPA)** dengan dukungan **offline mode** melalui IndexedDB.
 
-🌐 Coba langsung aplikasinya di: [storiez.netlify.app](https://storiez.netlify.app)
+🌐 Coba langsung aplikasinya di: [appstoriez.netlify.app](https://appstoriez.netlify.app/)
 
 ---
 
